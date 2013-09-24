@@ -4,7 +4,7 @@ public interface Cache<E> {
 
     E get(String key);
 
-    void set(String key, E element, int size);
+    void set(String key, E element);
 
     void remove(String key);
 

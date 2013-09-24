@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-public class LruMemoryCache<E> implements Cache<E> {
+public abstract class LruMemoryCache<E> implements Cache<E> {
     private final int maxSize;
 
     private final Map<String, Entry<E>> data = new HashMap<String, Entry<E>>();
@@ -27,7 +27,8 @@ public class LruMemoryCache<E> implements Cache<E> {
     }
 
     @Override
-    public void set(String key, E element, int size) {
+    public void set(String key, E element) {
+        int size = calculateSize(element);
         data.put(key, new Entry<E>(element, size));
         lruStatus.add(key);
         currentSize += size;
@@ -66,6 +67,8 @@ public class LruMemoryCache<E> implements Cache<E> {
             remove(lruStatus.peek());
         }
     }
+
+    public abstract int calculateSize(E element);
 
     private static class Entry<E> {
 
