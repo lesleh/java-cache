@@ -10,6 +10,6 @@ public interface Cache<E> {
 
     boolean containsKey(String key);
 
-    void flush();
+    void clear();
 
 }
