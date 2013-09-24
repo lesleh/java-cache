@@ -30,6 +30,20 @@ public class LruMemoryCacheTests {
     }
 
     @Test
+    public void testSettingKeyAgain() {
+        cache.set("a", "aaa");
+        cache.set("a", "bbb");
+        assertEquals("bbb", cache.get("a"));
+    }
+
+    @Test
+    public void testRemove() {
+        cache.set("a", "aaa");
+        cache.remove("a");
+        assertFalse(cache.containsKey("a"));
+    }
+
+    @Test
     public void testRemovalWhenFull() {
         cache.set("a", "aaa");
         cache.set("b", "bbb");
