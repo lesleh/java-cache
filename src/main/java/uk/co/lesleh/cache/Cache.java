@@ -8,7 +8,8 @@ public interface Cache<E> {
 
     void remove(String key);
 
-    boolean has(String key);
+    boolean containsKey(String key);
 
     void flush();
+
 }
