@@ -28,6 +28,11 @@ public abstract class LruMemoryCache<E> implements Cache<E> {
 
     @Override
     public void set(String key, E element) {
+        if(key == null)
+            throw new NullPointerException();
+        if(element == null)
+            throw new NullPointerException();
+
         int size = calculateSize(element);
         data.put(key, new Entry<E>(element, size));
         lruStatus.add(key);
