@@ -1,20 +1,21 @@
 package uk.co.lesleh.cache;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
-import org.junit.*;
-
-public class LruMemoryCacheTests {
+public class LruCacheTests {
 
     private final int MAX_SIZE = 25;
 
-    LruMemoryCache<String> cache;
+    LruCache<String> cache;
 
     @Before
     public void initialize() {
-        cache = new LruMemoryCache<String>(MAX_SIZE) {
+        cache = new LruCache<String>(new MemoryCache<String>(), MAX_SIZE) {
             @Override
-            public int calculateSize(String element) {
+            int calculateSize(String element) {
                 return element.length();
             }
         };
@@ -31,7 +32,7 @@ public class LruMemoryCacheTests {
         cache.set("a", "a");
         cache.set("a", "bb");
         assertEquals("bb", cache.get("a"));
-        assertEquals(2, cache.size());
+        assertEquals(2, cache.getSize());
     }
 
     @Test
@@ -67,7 +68,7 @@ public class LruMemoryCacheTests {
         cache.set("b", "b");
 
         cache.clear();
-        assertEquals(0, cache.size());
+        assertEquals(0, cache.getSize());
         assertFalse(cache.containsKey("a"));
         assertFalse(cache.containsKey("b"));
     }
@@ -75,14 +76,14 @@ public class LruMemoryCacheTests {
     @Test
     public void testSize() {
         cache.set("a", "a");
-        assertEquals(1, cache.size());
+        assertEquals(1, cache.getSize());
         cache.set("b", "bb");
-        assertEquals(3, cache.size());
+        assertEquals(3, cache.getSize());
     }
 
     @Test
     public void testMaxSize() {
-        assertEquals(MAX_SIZE, cache.maxSize());
+        assertEquals(MAX_SIZE, cache.getMaxSize());
     }
 
     @Test(expected = NullPointerException.class)
