@@ -80,6 +80,11 @@ public class LruMemoryCacheTests {
         assertEquals(3, cache.size());
     }
 
+    @Test
+    public void testMaxSize() {
+        assertEquals(MAX_SIZE, cache.maxSize());
+    }
+
     @Test(expected = NullPointerException.class)
     public void testGetNullKey() {
         cache.get(null);
