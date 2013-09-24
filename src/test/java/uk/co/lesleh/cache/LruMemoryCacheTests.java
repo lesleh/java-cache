@@ -68,4 +68,19 @@ public class LruMemoryCacheTests {
         assertEquals(ELEMENT_SIZE * 2, cache.size());
     }
 
+    @Test(expected = NullPointerException.class)
+    public void testGetNullKey() {
+        cache.get(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testSetNullKey() {
+        cache.set(null, "aaa");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testSetNullValue() {
+        cache.set("a", null);
+    }
+
 }
