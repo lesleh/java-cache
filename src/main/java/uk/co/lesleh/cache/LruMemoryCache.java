@@ -67,6 +67,11 @@ public abstract class LruMemoryCache<E> implements Cache<E> {
         return currentSize;
     }
 
+    @Override
+    public int maxSize() {
+        return maxSize;
+    }
+
     private void trim() {
         while(currentSize > maxSize) {
             remove(lruStatus.peek());

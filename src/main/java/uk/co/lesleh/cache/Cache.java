@@ -14,4 +14,6 @@ public interface Cache<E> {
 
     int size();
 
+    int maxSize();
+
 }
