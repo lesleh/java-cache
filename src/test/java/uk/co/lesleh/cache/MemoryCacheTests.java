@@ -53,4 +53,9 @@ public class MemoryCacheTests {
         cache.set("a", null);
     }
 
+    @Test(expected = NullPointerException.class)
+    public void testRemoveNullKey() {
+        cache.remove(null);
+    }
+
 }
