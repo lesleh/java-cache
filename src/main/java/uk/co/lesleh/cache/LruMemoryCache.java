@@ -33,6 +33,9 @@ public abstract class LruMemoryCache<E> implements Cache<E> {
         if(element == null)
             throw new NullPointerException();
 
+        if(containsKey(key))
+            remove(key);
+
         int size = calculateSize(element);
         data.put(key, new Entry<E>(element, size));
         lruStatus.add(key);
