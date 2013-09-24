@@ -12,8 +12,4 @@ public interface Cache<E> {
 
     void clear();
 
-    int size();
-
-    int maxSize();
-
 }

@@ -65,12 +65,10 @@ public abstract class LruMemoryCache<E> implements Cache<E> {
         currentSize = 0;
     }
 
-    @Override
     public int size() {
         return currentSize;
     }
 
-    @Override
     public int maxSize() {
         return maxSize;
     }

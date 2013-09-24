@@ -8,7 +8,7 @@ public class LruMemoryCacheTests {
 
     private final int MAX_SIZE = 25;
 
-    Cache<String> cache;
+    LruMemoryCache<String> cache;
 
     @Before
     public void initialize() {
