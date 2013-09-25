@@ -17,21 +17,21 @@ public class MemoryCacheTests {
 
     @Test
     public void testSet() {
-        cache.set("a", "a");
+        cache.put("a", "a");
         assertTrue("Cache should contain 'a'.", cache.containsKey("a"));
     }
 
     @Test
     public void testRemove() {
-        cache.set("a", "aaa");
+        cache.put("a", "aaa");
         cache.remove("a");
         assertFalse(cache.containsKey("a"));
     }
 
     @Test
     public void testClear() {
-        cache.set("a", "a");
-        cache.set("b", "b");
+        cache.put("a", "a");
+        cache.put("b", "b");
 
         cache.clear();
         assertFalse(cache.containsKey("a"));
@@ -45,12 +45,12 @@ public class MemoryCacheTests {
 
     @Test(expected = NullPointerException.class)
     public void testSetNullKey() {
-        cache.set(null, "a");
+        cache.put(null, "a");
     }
 
     @Test(expected = NullPointerException.class)
     public void testSetNullValue() {
-        cache.set("a", null);
+        cache.put("a", null);
     }
 
     @Test(expected = NullPointerException.class)

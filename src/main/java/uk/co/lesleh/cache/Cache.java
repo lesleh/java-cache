@@ -1,14 +1,14 @@
 package uk.co.lesleh.cache;
 
-public interface Cache<E> {
+public interface Cache<K, V> {
 
-    E get(String key);
+    V get(K key);
 
-    void set(String key, E element);
+    void put(K key, V element);
 
-    void remove(String key);
+    void remove(K key);
 
-    boolean containsKey(String key);
+    boolean containsKey(K key);
 
     void clear();
 

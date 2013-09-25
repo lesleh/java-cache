@@ -6,13 +6,13 @@ import java.util.Map;
 import java.util.Queue;
 
 // Decorator for any Cache
-public abstract class LruCache<E> implements Cache<E> {
+public abstract class LruCache<K, V> implements Cache<K, V> {
 
-    private Cache<E> backingCache;
+    private Cache<K, V> backingCache;
 
-    private Queue<String> lruData = new LinkedList<String>();
+    private Queue<K> lruData = new LinkedList<K>();
 
-    private Map<String, Integer> sizes = new HashMap<String, Integer>();
+    private Map<K, Integer> sizes = new HashMap<K, Integer>();
 
     private final int maxSize;
 
@@ -26,14 +26,14 @@ public abstract class LruCache<E> implements Cache<E> {
         return maxSize;
     }
 
-    public LruCache(Cache<E> backingCache, int maxSize) {
+    public LruCache(Cache<K, V> backingCache, int maxSize) {
         this.backingCache = backingCache;
         this.maxSize = maxSize;
     }
 
     @Override
-    public E get(String key) {
-        E element = backingCache.get(key);
+    public V get(K key) {
+        V element = backingCache.get(key);
 
         lruData.remove(key);
         lruData.add(key);
@@ -42,14 +42,14 @@ public abstract class LruCache<E> implements Cache<E> {
     }
 
     @Override
-    public void set(String key, E element) {
+    public void put(K key, V element) {
         if (backingCache.containsKey(key)) {
             remove(key);
         }
 
-        backingCache.set(key, element);
+        backingCache.put(key, element);
         lruData.add(key);
-        int elementSize = calculateSize(element);
+        int elementSize = sizeOf(key, element);
         sizes.put(key, elementSize);
         size += elementSize;
 
@@ -63,14 +63,14 @@ public abstract class LruCache<E> implements Cache<E> {
     }
 
     @Override
-    public void remove(String key) {
+    public void remove(K key) {
         backingCache.remove(key);
         lruData.remove(key);
         size -= sizes.remove(key);
     }
 
     @Override
-    public boolean containsKey(String key) {
+    public boolean containsKey(K key) {
         return backingCache.containsKey(key);
     }
 
@@ -82,5 +82,5 @@ public abstract class LruCache<E> implements Cache<E> {
         size = 0;
     }
 
-    abstract int calculateSize(E element);
+    abstract int sizeOf(K key, V value);
 }

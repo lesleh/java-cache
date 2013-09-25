@@ -15,57 +15,57 @@ public class LruCacheTests {
     public void initialize() {
         cache = new LruCache<String>(new MemoryCache<String>(), MAX_SIZE) {
             @Override
-            int calculateSize(String element) {
-                return element.length();
+            int sizeOf(String key, String value) {
+                return value.length();
             }
         };
     }
 
     @Test
     public void testSet() {
-        cache.set("a", "a");
+        cache.put("a", "a");
         assertTrue("Cache should contain 'a'.", cache.containsKey("a"));
     }
 
     @Test
     public void testSettingKeyAgain() {
-        cache.set("a", "a");
-        cache.set("a", "bb");
+        cache.put("a", "a");
+        cache.put("a", "bb");
         assertEquals("bb", cache.get("a"));
         assertEquals(2, cache.getSize());
     }
 
     @Test
     public void testRemove() {
-        cache.set("a", "aaa");
+        cache.put("a", "aaa");
         cache.remove("a");
         assertFalse(cache.containsKey("a"));
     }
 
     @Test
     public void testRemovalWhenFull() {
-        cache.set("a", "1234567890");
-        cache.set("b", "1234567890");
-        cache.set("c", "1234567890");
+        cache.put("a", "1234567890");
+        cache.put("b", "1234567890");
+        cache.put("c", "1234567890");
 
         assertFalse(cache.containsKey("a"));
     }
 
     @Test
     public void testRemovalOfLruWhenFull() {
-        cache.set("a", "1234567890");
-        cache.set("b", "1234567890");
+        cache.put("a", "1234567890");
+        cache.put("b", "1234567890");
 
         cache.get("a"); // Refresh "a"
 
-        cache.set("c", "1234567890");
+        cache.put("c", "1234567890");
         assertFalse(cache.containsKey("b"));
     }
 
     @Test
     public void testClear() {
-        cache.set("a", "a");
-        cache.set("b", "b");
+        cache.put("a", "a");
+        cache.put("b", "b");
 
         cache.clear();
         assertEquals(0, cache.getSize());
@@ -75,9 +75,9 @@ public class LruCacheTests {
 
     @Test
     public void testSize() {
-        cache.set("a", "a");
+        cache.put("a", "a");
         assertEquals(1, cache.getSize());
-        cache.set("b", "bb");
+        cache.put("b", "bb");
         assertEquals(3, cache.getSize());
     }
 
@@ -93,12 +93,12 @@ public class LruCacheTests {
 
     @Test(expected = NullPointerException.class)
     public void testSetNullKey() {
-        cache.set(null, "a");
+        cache.put(null, "a");
     }
 
     @Test(expected = NullPointerException.class)
     public void testSetNullValue() {
-        cache.set("a", null);
+        cache.put("a", null);
     }
 
     @Test(expected = NullPointerException.class)

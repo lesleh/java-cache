@@ -3,12 +3,12 @@ package uk.co.lesleh.cache;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MemoryCache<E> implements Cache<E> {
+public class MemoryCache<K, V> implements Cache<K, V> {
 
-    private Map<String, E> data = new HashMap<String, E>();
+    private Map<K, V> data = new HashMap<K, V>();
 
     @Override
-    public E get(String key) {
+    public V get(K key) {
         if (key == null)
             throw new NullPointerException();
 
@@ -16,7 +16,7 @@ public class MemoryCache<E> implements Cache<E> {
     }
 
     @Override
-    public void set(String key, E element) {
+    public void put(K key, V element) {
         if (key == null || element == null)
             throw new NullPointerException();
 
@@ -24,12 +24,12 @@ public class MemoryCache<E> implements Cache<E> {
     }
 
     @Override
-    public void remove(String key) {
+    public void remove(K key) {
         data.remove(key);
     }
 
     @Override
-    public boolean containsKey(String key) {
+    public boolean containsKey(K key) {
         return data.containsKey(key);
     }
 
