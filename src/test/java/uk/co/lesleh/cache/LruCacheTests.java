@@ -9,11 +9,11 @@ public class LruCacheTests {
 
     private final int MAX_SIZE = 25;
 
-    LruCache<String> cache;
+    LruCache<String, String> cache;
 
     @Before
     public void initialize() {
-        cache = new LruCache<String>(new MemoryCache<String>(), MAX_SIZE) {
+        cache = new LruCache<String, String>(new MemoryCache<String, String>(), MAX_SIZE) {
             @Override
             int sizeOf(String key, String value) {
                 return value.length();

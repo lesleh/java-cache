@@ -8,11 +8,11 @@ import static org.junit.Assert.assertTrue;
 
 public class MemoryCacheTests {
 
-    MemoryCache<String> cache;
+    MemoryCache<String, String> cache;
 
     @Before
     public void initialize() {
-        cache = new MemoryCache<String>();
+        cache = new MemoryCache<String, String>();
     }
 
     @Test
