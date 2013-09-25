@@ -3,8 +3,7 @@ package uk.co.lesleh.cache;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class MemoryCacheTests {
 
@@ -12,7 +11,12 @@ public class MemoryCacheTests {
 
     @Before
     public void initialize() {
-        cache = new MemoryCache<String, String>();
+        cache = new MemoryCache<String, String>() {
+            @Override
+            protected int sizeOf(String key, String value) {
+                return value.length();
+            }
+        };
     }
 
     @Test
@@ -36,6 +40,18 @@ public class MemoryCacheTests {
         cache.clear();
         assertFalse(cache.containsKey("a"));
         assertFalse(cache.containsKey("b"));
+    }
+
+    @Test
+    public void testSize() {
+        cache.put("a", "aaa");
+        assertEquals(3, cache.size());
+    }
+
+    @Test
+    public void testMaxSize() {
+        cache.put("a", "aaa");
+        assertEquals(Integer.MAX_VALUE, cache.maxSize());
     }
 
     @Test(expected = NullPointerException.class)
