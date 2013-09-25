@@ -12,8 +12,6 @@ public abstract class LruCache<K, V> implements Cache<K, V> {
 
     private Queue<K> lruData = new LinkedList<K>();
 
-    private Map<K, Integer> sizes = new HashMap<K, Integer>();
-
     private final int maxSize;
 
     private int size;
@@ -50,7 +48,6 @@ public abstract class LruCache<K, V> implements Cache<K, V> {
         backingCache.put(key, element);
         lruData.add(key);
         int elementSize = sizeOf(key, element);
-        sizes.put(key, elementSize);
         size += elementSize;
 
         reduceToSize();
@@ -63,10 +60,11 @@ public abstract class LruCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    public void remove(K key) {
-        backingCache.remove(key);
+    public V remove(K key) {
+        V value = backingCache.remove(key);
         lruData.remove(key);
-        size -= sizes.remove(key);
+        size -= sizeOf(key, value);
+        return value;
     }
 
     @Override
@@ -78,7 +76,6 @@ public abstract class LruCache<K, V> implements Cache<K, V> {
     public void clear() {
         backingCache.clear();
         lruData.clear();
-        sizes.clear();
         size = 0;
     }
 

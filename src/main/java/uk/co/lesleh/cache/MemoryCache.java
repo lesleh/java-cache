@@ -24,8 +24,8 @@ public class MemoryCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    public void remove(K key) {
-        data.remove(key);
+    public V remove(K key) {
+        return data.remove(key);
     }
 
     @Override
