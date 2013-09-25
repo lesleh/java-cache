@@ -32,7 +32,7 @@ public class LruCacheTests {
         cache.put("a", "a");
         cache.put("a", "bb");
         assertEquals("bb", cache.get("a"));
-        assertEquals(2, cache.getSize());
+        assertEquals(2, cache.size());
     }
 
     @Test
@@ -68,7 +68,7 @@ public class LruCacheTests {
         cache.put("b", "b");
 
         cache.clear();
-        assertEquals(0, cache.getSize());
+        assertEquals(0, cache.size());
         assertFalse(cache.containsKey("a"));
         assertFalse(cache.containsKey("b"));
     }
@@ -76,14 +76,14 @@ public class LruCacheTests {
     @Test
     public void testSize() {
         cache.put("a", "a");
-        assertEquals(1, cache.getSize());
+        assertEquals(1, cache.size());
         cache.put("b", "bb");
-        assertEquals(3, cache.getSize());
+        assertEquals(3, cache.size());
     }
 
     @Test
     public void testMaxSize() {
-        assertEquals(MAX_SIZE, cache.getMaxSize());
+        assertEquals(MAX_SIZE, cache.maxSize());
     }
 
     @Test(expected = NullPointerException.class)

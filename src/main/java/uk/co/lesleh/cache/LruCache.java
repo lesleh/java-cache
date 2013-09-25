@@ -16,11 +16,11 @@ public abstract class LruCache<K, V> implements Cache<K, V> {
 
     private int size;
 
-    public int getSize() {
+    public int size() {
         return size;
     }
 
-    public int getMaxSize() {
+    public int maxSize() {
         return maxSize;
     }
 

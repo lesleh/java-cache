@@ -7,6 +7,8 @@ public class MemoryCache<K, V> implements Cache<K, V> {
 
     private Map<K, V> data = new HashMap<K, V>();
 
+    private int size;
+
     @Override
     public V get(K key) {
         if (key == null)
@@ -20,7 +22,9 @@ public class MemoryCache<K, V> implements Cache<K, V> {
         if (key == null || element == null)
             throw new NullPointerException();
 
+        int elementSize = sizeOf(key, element);
         data.put(key, element);
+        size += elementSize;
     }
 
     @Override
@@ -36,5 +40,19 @@ public class MemoryCache<K, V> implements Cache<K, V> {
     @Override
     public void clear() {
         data.clear();
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public int maxSize() {
+        return Integer.MAX_VALUE;
+    }
+
+    protected int sizeOf(K key, V value) {
+        return 1;
     }
 }
