@@ -3,6 +3,8 @@ package uk.co.lesleh.cache;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class LruCacheTests {
@@ -22,13 +24,13 @@ public class LruCacheTests {
     }
 
     @Test
-    public void testSet() {
+    public void testSet() throws IOException {
         cache.put("a", "a");
         assertTrue("Cache should contain 'a'.", cache.containsKey("a"));
     }
 
     @Test
-    public void testSettingKeyAgain() {
+    public void testSettingKeyAgain() throws IOException {
         cache.put("a", "a");
         cache.put("a", "bb");
         assertEquals("bb", cache.get("a"));
@@ -36,14 +38,14 @@ public class LruCacheTests {
     }
 
     @Test
-    public void testRemove() {
+    public void testRemove() throws IOException {
         cache.put("a", "aaa");
         cache.remove("a");
         assertFalse(cache.containsKey("a"));
     }
 
     @Test
-    public void testRemovalWhenFull() {
+    public void testRemovalWhenFull() throws IOException {
         cache.put("a", "1234567890");
         cache.put("b", "1234567890");
         cache.put("c", "1234567890");
@@ -52,7 +54,7 @@ public class LruCacheTests {
     }
 
     @Test
-    public void testRemovalOfLruWhenFull() {
+    public void testRemovalOfLruWhenFull() throws IOException {
         cache.put("a", "1234567890");
         cache.put("b", "1234567890");
 
@@ -63,7 +65,7 @@ public class LruCacheTests {
     }
 
     @Test
-    public void testClear() {
+    public void testClear() throws IOException {
         cache.put("a", "a");
         cache.put("b", "b");
 
@@ -74,7 +76,7 @@ public class LruCacheTests {
     }
 
     @Test
-    public void testSize() {
+    public void testSize() throws IOException {
         cache.put("a", "a");
         assertEquals(1, cache.size());
         cache.put("b", "bb");
@@ -82,27 +84,27 @@ public class LruCacheTests {
     }
 
     @Test
-    public void testMaxSize() {
+    public void testMaxSize() throws IOException {
         assertEquals(MAX_SIZE, cache.maxSize());
     }
 
     @Test(expected = NullPointerException.class)
-    public void testGetNullKey() {
+    public void testGetNullKey() throws IOException {
         cache.get(null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSetNullKey() {
+    public void testSetNullKey() throws IOException {
         cache.put(null, "a");
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSetNullValue() {
+    public void testSetNullValue() throws IOException {
         cache.put("a", null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testRemoveNullKey() {
+    public void testRemoveNullKey() throws IOException {
         cache.remove(null);
     }
 

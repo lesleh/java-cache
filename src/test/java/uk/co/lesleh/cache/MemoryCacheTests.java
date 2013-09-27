@@ -3,6 +3,8 @@ package uk.co.lesleh.cache;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class MemoryCacheTests {
@@ -20,20 +22,20 @@ public class MemoryCacheTests {
     }
 
     @Test
-    public void testSet() {
+    public void testSet() throws IOException {
         cache.put("a", "a");
         assertTrue("Cache should contain 'a'.", cache.containsKey("a"));
     }
 
     @Test
-    public void testRemove() {
+    public void testRemove() throws IOException {
         cache.put("a", "aaa");
         cache.remove("a");
         assertFalse(cache.containsKey("a"));
     }
 
     @Test
-    public void testClear() {
+    public void testClear() throws IOException {
         cache.put("a", "a");
         cache.put("b", "b");
 
@@ -43,34 +45,34 @@ public class MemoryCacheTests {
     }
 
     @Test
-    public void testSize() {
+    public void testSize() throws IOException {
         cache.put("a", "aaa");
         assertEquals(3, cache.size());
     }
 
     @Test
-    public void testMaxSize() {
+    public void testMaxSize() throws IOException {
         cache.put("a", "aaa");
         assertEquals(Integer.MAX_VALUE, cache.maxSize());
     }
 
     @Test(expected = NullPointerException.class)
-    public void testGetNullKey() {
+    public void testGetNullKey() throws IOException {
         cache.get(null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSetNullKey() {
+    public void testSetNullKey() throws IOException {
         cache.put(null, "a");
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSetNullValue() {
+    public void testSetNullValue() throws IOException {
         cache.put("a", null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void testRemoveNullKey() {
+    public void testRemoveNullKey() throws IOException {
         cache.remove(null);
     }
 
