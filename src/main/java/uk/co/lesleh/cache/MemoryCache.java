@@ -1,5 +1,6 @@
 package uk.co.lesleh.cache;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ public class MemoryCache<K, V> implements Cache<K, V> {
     private int size;
 
     @Override
-    public V get(K key) {
+    public V get(K key) throws IOException {
         if (key == null)
             throw new NullPointerException();
 
@@ -18,7 +19,7 @@ public class MemoryCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    public void put(K key, V element) {
+    public void put(K key, V element) throws IOException {
         if (key == null || element == null)
             throw new NullPointerException();
 
@@ -28,20 +29,20 @@ public class MemoryCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    public V remove(K key) {
-        if(key == null)
+    public V remove(K key) throws IOException {
+        if (key == null)
             throw new NullPointerException();
-        
+
         return data.remove(key);
     }
 
     @Override
-    public boolean containsKey(K key) {
+    public boolean containsKey(K key) throws IOException {
         return data.containsKey(key);
     }
 
     @Override
-    public void clear() {
+    public void clear() throws IOException {
         data.clear();
     }
 

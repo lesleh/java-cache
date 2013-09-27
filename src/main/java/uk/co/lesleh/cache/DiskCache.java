@@ -1,6 +1,7 @@
 package uk.co.lesleh.cache;
 
 import java.io.File;
+import java.io.IOException;
 
 public abstract class DiskCache<K, V> implements Cache<K, V> {
 
@@ -11,10 +12,10 @@ public abstract class DiskCache<K, V> implements Cache<K, V> {
     private int size;
 
     public DiskCache(File directory, int maxSize) {
-        if(!directory.exists())
+        if (!directory.exists())
             throw new IllegalArgumentException("Directory does not exist.");
 
-        if(directory.exists() && !directory.isDirectory())
+        if (directory.exists() && !directory.isDirectory())
             throw new IllegalArgumentException("Not a directory.");
 
         this.directory = directory;
@@ -22,7 +23,7 @@ public abstract class DiskCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    public V get(K key) {
+    public V get(K key) throws IOException {
         // TODO implement get()
         throw new RuntimeException("Not implemented.");
         /*RandomAccessFile f = new RandomAccessFile(getFilenameFromKey(key), "r");
@@ -32,25 +33,25 @@ public abstract class DiskCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    public void put(K key, V element) {
+    public void put(K key, V element) throws IOException {
         // TODO implement put()
         throw new RuntimeException("Not implemented.");
     }
 
     @Override
-    public V remove(K key) {
+    public V remove(K key) throws IOException {
         // TODO implement remove()
         throw new RuntimeException("Not implemented.");
     }
 
     @Override
-    public boolean containsKey(K key) {
+    public boolean containsKey(K key) throws IOException {
         File file = new File(directory, getFilenameFromKey(key));
         return file.exists();
     }
 
     @Override
-    public void clear() {
+    public void clear() throws IOException {
         // TODO empty directory
         throw new RuntimeException("Not implemented.");
     }
@@ -65,9 +66,9 @@ public abstract class DiskCache<K, V> implements Cache<K, V> {
         return maxSize;
     }
 
-    abstract byte[] serialize(V value);
+    abstract byte[] serialize(V value) throws IOException;
 
-    abstract V deserialize(byte[] bytes);
+    abstract V deserialize(byte[] bytes) throws IOException;
 
     abstract String getFilenameFromKey(K key);
 }

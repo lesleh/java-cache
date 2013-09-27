@@ -1,8 +1,7 @@
 package uk.co.lesleh.cache;
 
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
 
 // Decorator for any Cache
@@ -30,7 +29,7 @@ public abstract class LruCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    public V get(K key) {
+    public V get(K key) throws IOException {
         V element = backingCache.get(key);
 
         lruData.remove(key);
@@ -40,7 +39,7 @@ public abstract class LruCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    public void put(K key, V element) {
+    public void put(K key, V element) throws IOException {
         if (backingCache.containsKey(key)) {
             remove(key);
         }
@@ -53,14 +52,14 @@ public abstract class LruCache<K, V> implements Cache<K, V> {
         reduceToSize();
     }
 
-    private void reduceToSize() {
+    private void reduceToSize() throws IOException {
         while (size > maxSize) {
             remove(lruData.peek());
         }
     }
 
     @Override
-    public V remove(K key) {
+    public V remove(K key) throws IOException {
         V value = backingCache.remove(key);
         lruData.remove(key);
         size -= sizeOf(key, value);
@@ -68,12 +67,12 @@ public abstract class LruCache<K, V> implements Cache<K, V> {
     }
 
     @Override
-    public boolean containsKey(K key) {
+    public boolean containsKey(K key) throws IOException {
         return backingCache.containsKey(key);
     }
 
     @Override
-    public void clear() {
+    public void clear() throws IOException {
         backingCache.clear();
         lruData.clear();
         size = 0;

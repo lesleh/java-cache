@@ -1,5 +1,7 @@
 package uk.co.lesleh.cache;
 
+import java.io.IOException;
+
 public interface Cache<K, V> {
 
     /**
@@ -8,30 +10,32 @@ public interface Cache<K, V> {
      *
      * @param key the key to retrieve
      * @return the value for the given key
-     * @throws java.util.NoSuchElementException if the key doesn't exist in the cache
+     * @throws java.util.NoSuchElementException
+     *                                        if the key doesn't exist in the cache
      * @throws java.lang.NullPointerException if the key is null
      */
-    V get(K key);
+    V get(K key) throws IOException;
 
     /**
      * Puts the given value into the cache, at the given key. If an object already exists with this key, it will be
      * replaced.
      *
-     * @param key the key to store at
+     * @param key     the key to store at
      * @param element the value to store
      * @throws java.lang.NullPointerException if the key or element is null
      */
-    void put(K key, V element);
+    void put(K key, V element) throws IOException;
 
     /**
      * Removes the value at the given key and returns it. If no value exists with that key, an exception is thrown.
      *
      * @param key the key to remove
      * @return the value at the given key
-     * @throws java.util.NoSuchElementException if the key doesn't exist in the cache
+     * @throws java.util.NoSuchElementException
+     *                                        if the key doesn't exist in the cache
      * @throws java.lang.NullPointerException if the key is null
      */
-    V remove(K key);
+    V remove(K key) throws IOException;
 
     /**
      * Checks to see if a value exists in the cache with the given key.
@@ -40,12 +44,12 @@ public interface Cache<K, V> {
      * @return true if a value exists, false otherwise
      * @throws java.lang.NullPointerException if the key is null
      */
-    boolean containsKey(K key);
+    boolean containsKey(K key) throws IOException;
 
     /**
      * Removes all elements from the cache.
      */
-    void clear();
+    void clear() throws IOException;
 
     /**
      * Returns the current size of the cache. Calculation of the size is implementation specific.
