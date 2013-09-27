@@ -29,6 +29,9 @@ public class MemoryCache<K, V> implements Cache<K, V> {
 
     @Override
     public V remove(K key) {
+        if(key == null)
+            throw new NullPointerException();
+        
         return data.remove(key);
     }
 
