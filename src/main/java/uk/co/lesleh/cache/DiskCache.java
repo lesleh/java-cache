@@ -38,7 +38,8 @@ public abstract class DiskCache<K, V> implements Cache<K, V> {
 
     @Override
     public boolean containsKey(K key) {
-         // TODO implement containsKey()
+        File file = new File(directory, getFilenameFromKey(key));
+        return file.exists();
     }
 
     @Override
