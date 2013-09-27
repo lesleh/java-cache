@@ -23,7 +23,10 @@ public abstract class DiskCache<K, V> implements Cache<K, V> {
 
     @Override
     public V get(K key) {
-        // TODO implement get()
+        RandomAccessFile f = new RandomAccessFile(getFilenameFromKey(key), "r");
+        byte[] b = new byte[(int)f.length()];
+        f.read(b);
+        return deserialize(b);
     }
 
     @Override
