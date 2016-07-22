@@ -12,5 +12,5 @@ A collection of caching classes I wrote to handle various cache storage methods,
         }
     }
 
-    cache.set("a", "set-a");
-    String value = cache.get("a");
+    cache.set("b", "set-b");
+    String value = cache.get("b");
