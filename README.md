@@ -5,7 +5,7 @@ A collection of caching classes I wrote to handle various cache storage methods,
 ## Example
 
     int maxCacheSize = 100;
-    Cache<String, String> cache = new Cache<String, String>(maxCacheSize) {
+    Cache<String, String> cache = new MemoryCache<String, String>(maxCacheSize) {
         @Override
         public int sizeOf(String key, String value) {
             return value.length();
